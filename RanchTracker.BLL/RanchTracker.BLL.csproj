@@ -8,8 +8,8 @@
     <ProjectGuid>{93CC64B6-4168-4065-863D-255706427F73}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RanchApp.BLL</RootNamespace>
-    <AssemblyName>RanchApp.BLL</AssemblyName>
+    <RootNamespace>RanchTracker.BLL</RootNamespace>
+    <AssemblyName>RanchTracker.BLL</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -84,7 +84,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RanchApp.DAL\RanchTracker.DAL.csproj">
+    <ProjectReference Include="..\RanchTracker.DAL\RanchTracker.DAL.csproj">
       <Project>{09defa49-e424-49fa-b7d4-6bd239c9bbf8}</Project>
       <Name>RanchTracker.DAL</Name>
     </ProjectReference>
