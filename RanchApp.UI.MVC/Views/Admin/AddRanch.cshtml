@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "AddRanch";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+@using (Html.BeginForm("AddRanch", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+<div class="container-fluid mt-2">
+    <div class="col-12 mb-2">
+        <label for="name">Çiftlik İsmi</label>
+        <input type="text" class="form-control" id="Name" name="Name" placeholder="Çiftlik İsmi" required>
+    </div>
+    <div class="col-12 mb-2">
+        <label for="name">Kullanıcı Adı</label>
+        <input type="text" class="form-control" id="UserName" name="UserName" placeholder="Kullanıcı Adı" required>
+    </div>
+    <div class="col-12 mb-2">
+        <label for="name">Şifre</label>
+        <input type="text" class="form-control" id="UserPassword" name="UserPassword" placeholder="Şifre" required>
+    </div>
+    <div class="col-12 mb-2">
+        <label for="name">Email</label>
+        <input type="email" class="form-control" id="Email" name="Email" placeholder="Email" required>
+    </div>
+    <div class="col-12">
+        <label for="image">Logo</label><br />
+        <input type="File" id="File" name="File" required>
+    </div>
+
+    <hr class="mb-4">
+    <button class="btn btn-primary btn-lg btn-block" type="submit">Çiftlik Ekle</button>
+</div>
+}
+

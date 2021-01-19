@@ -1,0 +1,48 @@
+﻿@model IEnumerable<RanchApp.DAL.App_Classes.Category>
+@{
+    ViewBag.Title = "AddCattleType";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+@using (Html.BeginForm("AddCattleType", "CattleType", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    @Html.AntiForgeryToken()
+    <div class="container-fluid mt-2">
+        <label style="color:darkred;" class="col-12 text-center">@ViewBag.Message</label>
+        <div class="col-12 mb-2">
+            <label for="name">Türü</label>
+            <input type="text" class="form-control" id="Name" name="Name" placeholder="Hayvan Türü" required>
+        </div>
+        <div class="col-12 mb-2">
+            <label for="name">Tohumlanabiliyor mu ? (Dişi mi ?)</label>
+            <div style="margin-left:5px;" class="form-control">
+                <input type="radio" name="IsInsemination" value="true" required /> Evet
+                <input type="radio" name="IsInsemination" value="false" required /> Hayır
+            </div>
+        </div>
+        <div class="col-12 mb-5">
+            <label for="name">Kategorisi</label>
+            <select class="form-control" name="CategoryID" required>
+                @foreach (var item in Model)
+                {
+                    <option value="@item.ID">@item.Name</option>
+                }
+
+            </select>
+        </div>
+        @if (Session["Id"] == null)
+        {
+            <script type="text/javascript">
+                    window.location.href = "@Url.Action("Index","Login")";
+            </script>
+        }
+        else
+        {
+            @Html.Hidden("RanchID", (int)Session["Id"])
+        }
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Tür Ekle</button>
+    </div>
+
+}
+

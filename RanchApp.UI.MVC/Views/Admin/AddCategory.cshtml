@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "AddCategory";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+
+@using (Html.BeginForm("AddCategory", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    @Html.AntiForgeryToken()
+    <div class="container-fluid mt-2">
+        <div class="col-12 mb-2">
+            <label for="name">Kategori İsmi</label>
+            <input type="text" class="form-control" id="Name" name="Name" placeholder="Kategori İsmi" required>
+
+        </div>
+        <div class="col-12">
+            <label for="image">Image</label>
+            <input type="File" id="File" name="File" required>
+
+        </div>
+
+        <hr class="mb-4">
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Kategori Ekle</button>
+    </div>
+
+}

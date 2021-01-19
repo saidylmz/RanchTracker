@@ -1,0 +1,38 @@
+﻿@model RanchApp.DAL.App_Classes.Cattle
+@{
+    ViewBag.Title = "AddInsemination";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+@using (Html.BeginForm("AddInsemination", "Insemination", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="container-fluid mt-2">
+        <div class="col-12 mb-2">
+            <label for="EarringNumberq">Küpe Numarası</label>
+            <input type="text" class="form-control" id="CattleID" name="CattleID" value="@Model.EarringNumber" placeholder="Küpe No" readonly />
+        </div>
+        <div class="col-12 mb-2">
+            <label for="BirthDate">Tohumlanma Tarihi</label>
+            <div class="input-group">
+                <input type="text" class="form-control" name="Date" id="Date" placeholder="mm/dd/yyyy" required>
+                <div class="input-group-append">
+                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                </div>
+            </div>
+        </div>
+        @if (Session["Id"] == null)
+        {
+            <script type="text/javascript">
+                    window.location.href = "@Url.Action("Index","Login")";
+            </script>
+        }
+        else
+        {
+            @Html.Hidden("Result", true)
+        }
+
+        <button type="submit" class="btn btn-info btn-lg col-12 mb-3">Tohumlama Ekle</button>
+    </div>
+}
+

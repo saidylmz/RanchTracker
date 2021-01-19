@@ -1,0 +1,105 @@
+﻿
+@{
+    Layout = "";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Çiftlik Uygulaması</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/Content/Login.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand float-left" href="">Çiftlik Uygulaması</a>
+        <a href="@Url.Action("Index","Demo")" class="navbar-brand float-right text-white">Tanıtım</a>
+        <div class="navbar-collapse " id="navbarSupportedContent" data-navbarbg="skin5">
+
+            <!-- ============================================================== -->
+            <!-- Right side toggle and nav items -->
+            <!-- ============================================================== -->
+            <!-- User profile and search -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- User profile and search -->
+
+        </div>
+    </nav>
+    <div class="text-center">
+        
+        <div class="form-signin col-md-4 col-lg-4 col-xs-12"> 
+            <div class="row col-12 text-center float-left">
+                <img class="mb-4 mt-5 col-6" src="~/Images/logo.png" alt="" width="120" height="170">
+                <img class="mb-4 mt-5 col-6" src="~/Images/logo2.png" alt="" width="120" height="170">
+            </div>
+        </div>
+        <div class="form-signin">
+
+            <h1 class="h3 mb-3 font-weight-normal">Hoşgeldiniz </h1>
+            <span style="color:darkred" class="HataMesaji"></span>
+            <label for="inputUserName" class="sr-only">Email address @ViewBag.token</label>
+            <input type="text" id="UserName" class="form-control" name="UserName" placeholder="Kullanıcı Adı" value="@ViewBag.UserName" required autofocus="">
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" id="UserPassword" class="form-control" name="UserPassword" value="@ViewBag.Password" placeholder="Şifre" required>
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" id="RememberMe" name="RememberMe" checked> Beni Hatırla
+                </label>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="Login()">Giriş Yap</button>
+        </div>
+    </div>
+    <footer>
+        <p class="mt-5 mb-3 text-muted text-center">© @DateTime.Now.Year | Developed By <a href="http://www.sercancalis.com" target="_blank">Sercan Çalış</a> And <a href="http://www.saityilmaz.com" target="_blank">Sait YILMAZ</a></p>
+    </footer>
+</body>
+</html>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery-3.0.0.js"></script>
+<script>
+    var urlParams;
+    (window.onpopstate = function () {
+    var match,
+        pl     = /\+/g,  // Regex for replacing addition symbol with a space
+        search = /([^&=]+)=?([^&]*)/g,
+        decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+        query  = window.location.search.substring(1);
+    urlParams = {};
+    while (match = search.exec(query))
+       urlParams[decode(match[1])] = decode(match[2]);
+    })();
+   
+
+    function Login() {
+        var UserName = $('#UserName').val();
+        var UserPassword = $('#UserPassword').val();
+        var RememberMe = document.getElementById('RememberMe').checked;
+        var token = urlParams["token"];
+        $.ajax({
+            url: 'Login/Login',
+            type: 'POST',
+            data: { UserName, UserPassword, RememberMe, token },
+            success: function myfunction(data) {
+
+                if (data == 'True') {
+
+                    var url = '@Url.Action("Index","Home")';
+                    $('.HataMesaji').html("Giriş Başarılı Anasayfaya Yönlendiriliyorsunuz");
+                    setTimeout(function () {
+                        window.location.href = url;
+                    }, 100);
+                }
+                else {
+
+                    $('.HataMesaji').html("Giriş Başarısız");
+                }
+            },
+            error: function myfunction() {
+
+                 $('.HataMesaji').html("Giriş Başarısız");
+            }
+        });
+
+    }
+</script>

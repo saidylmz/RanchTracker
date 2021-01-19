@@ -1,0 +1,175 @@
+﻿@model IEnumerable<RanchApp.DAL.App_Classes.Cattle>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 col-xs-12">
+            <div id="piechart"></div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <div id="piechart2"></div>
+        </div>
+        <div class="card col-12">
+            <div class="card-body">
+                <h4 class="card-title">(Günlük / Haftalık / Aylık / Toplam) Süt Miktarı </h4>
+                <div class="m-t-20">
+                    <div class="d-flex no-block align-items-center">
+                        <span>
+                            @Math.Floor(Model.Where(x => x.CattleType.IsInsemination == true).Sum(x => x.Milks.Sum(y => y.Liter))) Litre Toplam Süt Miktarı
+                        </span>
+                        <div class="ml-auto">
+                            <span>@Math.Floor(Model.Where(x => x.CattleType.IsInsemination == true).Sum(x => x.Milks.Sum(y => y.Liter)))</span>
+                        </div>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 100%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <div class="m-t-25">
+                    <div class="d-flex no-block align-items-center m-t-15">
+                        <span>
+                            @if (Model.Where(x => x.CattleType.IsInsemination == true).Sum(x => x.Milks.Where(y => (DateTime.Now - y.Date).Days < 31).Sum(y => y.Liter)) == 0)
+                            {
+                                <label>0</label>
+                            }
+                            else
+                            {
+                                @(Math.Floor((Model.Where(x => x.CattleType.IsInsemination == true).Sum(x => x.Milks.Where(y => (DateTime.Now - y.Date).Days < 31).Sum(y => y.Liter)) / Model.Where(x => x.CattleType.IsInsemination == true).Sum(x => x.Milks.Sum(y => y.Liter)) * 100)))
+                            }
+                            % Aylık Süt Miktarı
+                        </span>
+                        <div class="ml-auto">
+                            <span>@(Math.Floor((Model.Where(x => x.CattleType.IsInsemination == true).Sum(x => x.Milks.Where(y => (DateTime.Now - y.Date).Days < 31).Sum(y => y.Liter)))))</span>
+                        </div>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width:  @if (Model.Where(x => x.CattleType.IsInsemination == true).Sum(x => x.Milks.Where(y => (DateTime.Now - y.Date).Days < 31).Sum(y => y.Liter)) == 0)
+                                {
+                                    <label>0</label>
+                                }
+                                else
+                                {
+                                    @(Math.Floor((Model.Where(x => x.CattleType.IsInsemination == true).Sum(x => x.Milks.Where(y => (DateTime.Now - y.Date).Days < 31).Sum(y => y.Liter)) / Model.Where(x => x.CattleType.IsInsemination == true).Sum(x => x.Milks.Sum(y => y.Liter)) * 100)))
+                                }%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <div class="m-t-25">
+                    <div class="d-flex no-block align-items-center m-t-15">
+                        <span>
+                            @if (Model.Where(x => x.CattleType.IsInsemination == true).Sum(x => x.Milks.Where(y => (DateTime.Now - y.Date).Days < 7).Sum(y => y.Liter)) == 0)
+                            {
+                                <label>0</label>
+                            }
+                            else
+                            {
+                                @(Math.Floor((Model.Where(x => x.CattleType.IsInsemination == true).Sum(x => x.Milks.Where(y => (DateTime.Now - y.Date).Days < 7).Sum(y => y.Liter)) / Model.Where(x => x.CattleType.IsInsemination == true).Sum(x => x.Milks.Sum(y => y.Liter)) * 100)))
+                            } % Haftalık Süt Miktarı
+                        </span>
+                        <div class="ml-auto">
+                            <span>@(Math.Floor((Model.Where(x => x.CattleType.IsInsemination == true).Sum(x => x.Milks.Where(y => (DateTime.Now - y.Date).Days < 7).Sum(y => y.Liter)))))</span>
+                        </div>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width:  @if (Model.Where(x => x.CattleType.IsInsemination == true).Sum(x => x.Milks.Where(y => (DateTime.Now - y.Date).Days < 7).Sum(y => y.Liter)) == 0)
+                                {
+                                    <label>0</label>
+                                }
+                                else
+                                {
+                                    @(Math.Floor((Model.Where(x => x.CattleType.IsInsemination == true).Sum(x => x.Milks.Where(y => (DateTime.Now - y.Date).Days < 7).Sum(y => y.Liter)) / Model.Where(x => x.CattleType.IsInsemination == true).Sum(x => x.Milks.Sum(y => y.Liter)) * 100)))
+                                }%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <div class="m-t-25">
+                    <div class="d-flex no-block align-items-center m-t-15">
+                        <span>
+                            @if (Model.Where(x => x.CattleType.IsInsemination == true).Sum(x => x.Milks.Where(y => (DateTime.Now - y.Date).Days < 1).Sum(y => y.Liter)) == 0)
+                            {
+                                <label>0</label>
+                            }
+                            else
+                            {
+                                @(Math.Floor((Model.Where(x => x.CattleType.IsInsemination == true).Sum(x => x.Milks.Where(y => (DateTime.Now - y.Date).Days < 1).Sum(y => y.Liter)) / Model.Where(x => x.CattleType.IsInsemination == true).Sum(x => x.Milks.Sum(y => y.Liter)) * 100)))
+                            } % Günlük Süt Miktarı
+                        </span>
+                        <div class="ml-auto">
+                            <span>@(Math.Floor((Model.Where(x => x.CattleType.IsInsemination == true).Sum(x => x.Milks.Where(y => (DateTime.Now - y.Date).Days < 1).Sum(y => y.Liter)))))</span>
+                        </div>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width:  @if (Model.Where(x => x.CattleType.IsInsemination == true).Sum(x => x.Milks.Where(y => (DateTime.Now - y.Date).Days < 1).Sum(y => y.Liter)) == 0)
+                                {
+                                    <label>0</label>
+                                }
+                                else
+                                {
+                                    @(Math.Floor((Model.Where(x => x.CattleType.IsInsemination == true).Sum(x => x.Milks.Where(y => (DateTime.Now - y.Date).Days < 1).Sum(y => y.Liter)) / Model.Where(x => x.CattleType.IsInsemination == true).Sum(x => x.Milks.Sum(y => y.Liter)) * 100)))
+                                }%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    // Load google charts
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    // Draw the chart and set the chart values
+    function drawChart() {
+        var ChartData = Array();
+
+        $.ajaxSetup({
+            async: false
+        });
+        var data2 = [['name', 'count']];
+        $.getJSON("/Home/GetCattleData", null, function (data) {
+            jQuery.each(data, function (i, item) {
+
+                data2.push([item.Name, item.Count]);
+            });
+        });
+        $.ajaxSetup({
+            async: true
+        });
+        var data = google.visualization.arrayToDataTable(data2, false);
+
+        // Optional; add a title and set the width and height of the chart
+        var options = { 'title': 'Toplam Hayvanlar', 'width': 400, 'height': 400 };
+
+        // Display the chart inside the <div> element with id="piechart"
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        chart.draw(data, options);
+
+        //-------------------------------------------------------
+
+        $.ajaxSetup({
+            async: false
+        });
+        var data2 = [['name', 'count']];
+        $.getJSON("/Home/GetInseminationData", null, function (data) {
+            jQuery.each(data, function (i, item) {
+
+                data2.push([item.Name, item.Count]);
+            });
+        });
+        $.ajaxSetup({
+            async: true
+        });
+        var data = google.visualization.arrayToDataTable(data2, false);
+
+        // Optional; add a title and set the width and height of the chart
+        var options = { 'title': 'Tohumlanmış Hayvanlar', 'width': 400, 'height': 400 };
+
+        // Display the chart inside the <div> element with id="piechart"
+        var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
+        chart.draw(data, options);
+
+    }
+</script>

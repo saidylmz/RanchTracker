@@ -1,0 +1,12 @@
+C:\Users\sercan.calis\Desktop\RanchApp\RanchApp.DAL\bin\Release\RanchApp.DAL.dll.config
+C:\Users\sercan.calis\Desktop\RanchApp\RanchApp.DAL\bin\Release\RanchApp.DAL.dll
+C:\Users\sercan.calis\Desktop\RanchApp\RanchApp.DAL\bin\Release\RanchApp.DAL.pdb
+C:\Users\sercan.calis\Desktop\RanchApp\RanchApp.DAL\bin\Release\EntityFramework.dll
+C:\Users\sercan.calis\Desktop\RanchApp\RanchApp.DAL\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\sercan.calis\Desktop\RanchApp\RanchApp.DAL\bin\Release\EntityFramework.xml
+C:\Users\sercan.calis\Desktop\RanchApp\RanchApp.DAL\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\sercan.calis\Desktop\RanchApp\RanchApp.DAL\obj\Release\RanchApp.DAL.csprojAssemblyReference.cache
+C:\Users\sercan.calis\Desktop\RanchApp\RanchApp.DAL\obj\Release\RanchApp.DAL.csproj.CoreCompileInputs.cache
+C:\Users\sercan.calis\Desktop\RanchApp\RanchApp.DAL\obj\Release\RanchApp.DAL.csproj.CopyComplete
+C:\Users\sercan.calis\Desktop\RanchApp\RanchApp.DAL\obj\Release\RanchApp.DAL.dll
+C:\Users\sercan.calis\Desktop\RanchApp\RanchApp.DAL\obj\Release\RanchApp.DAL.pdb

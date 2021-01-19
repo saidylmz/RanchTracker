@@ -1,0 +1,36 @@
+﻿@model RanchApp.DAL.App_Classes.Cattle
+@{
+    ViewBag.Title = "AddMilk";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+@using (Html.BeginForm("AddMilk", "Milk", FormMethod.Post ))
+{
+    @Html.AntiForgeryToken()
+    <div class="container-fluid mt-2">
+        <div class="col-12 mb-2">
+            <label for="EarringNumberq">Küpe Numarası</label>
+            <input type="text" class="form-control" id="CattleID" name="CattleID" value="@Model.EarringNumber" placeholder="Küpe No" readonly/>
+        </div>
+        <div class="col-12 mb-2">
+            <label for="BirthDate">Doğum Tarihi</label>
+            <div class="input-group">
+                <input type="text" class="form-control" name="Date" id="Date" placeholder="mm/dd/yyyy" required>
+                <div class="input-group-append">
+                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 mb-2">
+            <label for="Litre">Litre</label>
+            <input type="number" class="form-control" id="Liter" name="Liter"  placeholder="Litre" required  min="0.5" step="0.01" value="0.5" />
+        </div>
+        @if (Session["Id"] == null)
+        {
+            <script type="text/javascript">
+                    window.location.href = "@Url.Action("Index","Login")";
+            </script>
+        }
+        <button type="submit" class="btn btn-info btn-lg col-12 mb-3">Süt Ekle</button>
+    </div>
+}

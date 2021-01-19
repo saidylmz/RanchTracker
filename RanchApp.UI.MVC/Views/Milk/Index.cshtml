@@ -1,0 +1,36 @@
+﻿@model IEnumerable<RanchApp.DAL.App_Classes.Cattle>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<div class="container-fluid mt-2">
+    <table id="example" class="table table-striped table-bordered" style="width:100%; font-size:14px;">
+        <thead>
+            <tr>
+                <th>Adı ve Küpe Numarası</th>
+                <th>Günlük Süt Litresi </th>
+                <th>Haftalık Süt Litresi</th>
+                <th>Aylık Süt Litresi</th>
+                <th>Toplam Süt Litresi</th>
+                <th>İşlem</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Where(x=>x.CattleType.IsInsemination == true))
+            {
+                <tr>
+                    <td>@item.Name | @item.EarringNumber</td>
+                    <td>@item.Milks.Where(x=>(DateTime.Now - x.Date).Days == 1).Sum(x=>x.Liter) Litre</td>
+                    <td>@item.Milks.Where(x => (DateTime.Now - x.Date).Days < 8).Sum(x => x.Liter) Litre</td>
+                    <td>@item.Milks.Where(x => (DateTime.Now - x.Date).Days < 31).Sum(x => x.Liter) Litre</td>
+                    <td>@item.Milks.Sum(x => x.Liter) Litre</td>
+                    <td>
+                        <a href="@Url.Action("GetMilkByCattleEarringNumber","Milk",new { EarringNumber = item.EarringNumber })" class="btn btn-info text-white">Detayları Göster</a> 
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

@@ -1,0 +1,184 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@Html.Raw(ViewBag.Title)</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="~/Content/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/Content/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/Content/favicon-16x16.png">
+    <link rel="manifest" href="~/Content/site.webmanifest">
+    <link rel="mask-icon" href="~/Content/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <link href="../Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/3dButtons.css" rel="stylesheet" />
+    <link href="~/Content/css/style.min.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Scripts/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar" data-navbarbg="skin5">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                <div class="navbar-header" data-logobg="skin5">
+                    <!-- This is for the sidebar toggle which is visible on mobile only -->
+                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+                    <a class="navbar-brand float-left" href="@Url.Action("Index","Home")">
+                        <!-- Logo icon -->
+                        @if (Session["Logo"] != null)
+                        {
+                            <b class="logo-icon p-l-10">
+                                <img src="@String.Format("data:image/gif;base64,{0}", Convert.ToBase64String((byte[])Session["Logo"]))" alt="homepage" class="light-logo" width="70"/>
+                            </b>
+                            <span class="logo-text">
+                                <!-- dark Logo text -->
+                                <a href="@Url.Action("Index","Home")" class="light-logo text-white" style="font-family: 'Gill Sans MT'; font-size:18px;" >@Session["Name"]</a>
+                            </span>
+                        }
+                        else
+                        {
+                            <b class="logo-icon p-l-10">
+                                <img src="~/Images/logo-icon.png" alt="homepage" class="light-logo" />
+                            </b>
+                            <span class="logo-text">
+                                <!-- dark Logo text -->
+                                <img src="~/Images/logo-text.png" alt="homepage" class="light-logo" />
+                            </span>
+                        }
+
+                        <!--End Logo icon -->
+                        <!-- Logo text -->
+
+                    </a>
+                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="ti-more"></i>
+                    </a>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+                    <ul class="navbar-nav float-left mr-auto">
+                        <li class="nav-item d-none d-md-block">
+                            <a class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)" data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a>
+                        </li>
+                    </ul>
+                    <!-- ============================================================== -->
+                    <!-- Right side toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-right">
+                        <!-- User profile and search -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-item" href="@Url.Action("Logout","Login")" style="background-color:white;"><i class="fa fa-power-off m-r-5 m-l-5"></i> Çıkış</a>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- User profile and search -->
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <aside class="left-sidebar" data-sidebarbg="skin5">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav" class="p-t-30">
+                        @if (Session["Role"] != null && (bool)Session["Role"] == true)
+                        {
+                            <li class="sidebar-item">
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("AddRanch","Admin")" aria-expanded="false"><i class="mdi mdi-plus-network"></i><span class="hide-menu">Çiftlik Ekle</span></a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link text-white" href="@Url.Action("AddCategory","Admin")" aria-expanded="false"><i class="mdi mdi-chart-bar"></i><span class="hide-menu">Kategori Ekle</span></a>
+                            </li>
+
+                        }
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Index","Category")" aria-expanded="false"><i class="mdi mdi-security-home"></i><span class="hide-menu">Anasayfa</span></a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Index","Home")" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span></a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("AddCattleType","CattleType")" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Tür Ekle</span></a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("AddCattle","Cattle")" aria-expanded="false"><i class="mdi mdi-cow"></i><span class="hide-menu">Hayvan Ekle</span></a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Index","Milk")" aria-expanded="false"><i class="mdi mdi-cup-water"></i><span class="hide-menu">Sütler</span></a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Index","Insemination")" aria-expanded="false"><i class="mdi mdi-timer-sand"></i><span class="hide-menu">Tohumlanmış Hayvanlar</span></a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+        <div class="page-wrapper" style="background-color:white;">
+            <main class="mb-5" style="min-height:480px">
+                @RenderBody()
+            </main>
+            <footer style="position: static;left: 0;bottom: 0;width: 100%;text-align: center;">
+                <p class="mt-5 mb-3 text-muted">&copy; @DateTime.Now.Year | Developed By <a href="http://www.sercancalis.com" target="_blank">Sercan ÇALIŞ</a> And <a href="http://www.saityilmaz.com" target="_blank">Sait YILMAZ</a></p>
+            </footer>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+</body>
+</html>
+<script src="../Scripts/jquery-3.0.0.js"></script>
+<script src="~/Scripts/umd/popper.min.js"></script>
+<script src="~/Scripts/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+<script src="~/Scripts/sidebarmenu.js"></script>
+<script src="~/Scripts/custom.min.js"></script>
+<script src="~/Scripts/waves.js"></script>
+<script src="../Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.4.0/dist/sweetalert2.all.min.js"></script>
+<script src="~/Scripts/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script src="~/Scripts/bootstrap-datepicker/dist/locales/bootstrap-datepicker.tr.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var table = $('#example').DataTable({
+            responsive: true
+        });
+    });
+
+    /*datwpicker*/
+    jQuery('.mydatepicker').datepicker();
+    jQuery('#BirthDate').datepicker({
+        autoclose: true,
+        todayHighlight: true 
+    });
+
+    jQuery('#Date').datepicker({
+        autoclose: true,
+        todayHighlight: true 
+    });
+
+
+</script>  

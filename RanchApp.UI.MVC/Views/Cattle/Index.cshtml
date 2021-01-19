@@ -1,0 +1,188 @@
+﻿@model IEnumerable<RanchApp.DAL.App_Classes.Cattle>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<div class="container-fluid mt-2">
+    <table id="example" class="table table-striped table-bordered" style="width:100%; font-size:14px;">
+        <thead>
+            <tr>
+                <th>Küpe Numarası | Adı</th>
+                <th>Anne Küpe Numarası</th>
+                <th>Tipi - Doğum Tarihi</th>
+                <th>Açıklama</th>
+
+                @if (Model.Count() > 0)
+                {
+                    if (Model.First().CattleType.IsInsemination == true)
+                    {
+                        <th>Tohumlanma</th>
+                        <th>Süt Listesi</th>
+                    }
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.EarringNumber | @item.Name</td>
+                    <td>
+                        @item.MomEarringNumber
+                        <a class="btn btn-sm btn-danger  float-right text-white ml-2 DeleteCattle" onclick="DeleteCattle('@item.EarringNumber',@item.CattleTypeID)">Sil</a>
+                        <a href="@Url.Action("UpdateCattle","Cattle",new { EarringNumber = item.EarringNumber })" class="btn btn-sm btn-success  float-right">Düzenle</a>
+                    </td>
+                    <td>@item.Type - @item.BirthDate.ToString("dd.MM.yyyy")</td>
+                    <td>@item.Description</td>
+                    @if (item.Inseminations.Count != 0)
+                    {
+                        <td>
+
+                            @if (item.Inseminations.Last().Result == true)
+                            {
+                                <label>Zamanı :@item.Inseminations.Last().Date.ToString("dd.MM.yyyy") | Geçen Gün : @DateTime.Now.Subtract(item.Inseminations.Last().Date).Days</label>
+
+
+                                <button class="btn btn-dark" onclick="UpdateInsemination(@item.Inseminations.Last().ID)">Tarihi Düzelt </button>
+
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("AddInsemination","Insemination",new { EarringNumber = item.EarringNumber })" class="btn btn-warning" style="margin-left:2px;">Tohumlama Yap</a>
+
+                                <label class="font-10">Başarısız Tohumlanma Sayısı:</label>
+                                {
+                                    var OrderedInsemination = item.Inseminations.OrderByDescending(x => x.Date).ToArray();
+                                    var sayac = 0;
+                                    for (int i = 0; i < item.Inseminations.Count(); i++)
+                                    {
+                                        sayac++;
+                                        if (OrderedInsemination[i].Result == true)
+                                        {
+                                            break;
+                                        }
+
+                                    }
+                                    @sayac
+                                }
+
+
+                            }
+                        </td>
+                    }
+                    else
+                    {
+                        if (item.CattleType.IsInsemination == true)
+                        {
+                            <td>
+                                <a href="@Url.Action("AddInsemination","Insemination",new { EarringNumber = item.EarringNumber })" class="btn btn-warning" style="margin-left:2px;">Tohumlama Yap</a>
+
+
+                            </td>
+                        }
+
+                    }
+                    @if (item.CattleType.IsInsemination == true)
+                    {
+                        <td>
+                            <a href="@Url.Action("GetMilkByCattleEarringNumber","Milk",new { EarringNumber = item.EarringNumber })" class="btn btn-danger">Süt Listesi</a>
+
+
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script>
+    function DeleteCattle(EarringNumber, CattleTypeID) {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+
+            text: EarringNumber + ' küpe numaralı hayvanı silmek istediğinize emin misiniz ?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: ' Evet ',
+            cancelButtonText: ' Hayır ',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+
+                $.ajax({
+                    url: '/Cattle/DeleteCattle',
+                    type: 'POST',
+                    data: { EarringNumber, CattleTypeID },
+                    success: function myfunction() {
+                        swalWithBootstrapButtons.fire(
+                            'Silindi!',
+                            'Tür Silindi',
+                            'success'
+                        ).then((result) => {
+                            location.reload();
+                        });
+                    },
+                    error: function myfunction() {
+                        swalWithBootstrapButtons.fire(
+                            'Başarısız',
+                            'Tür Silinemedi',
+                            'error'
+                        )
+                    }
+                });
+            }
+        })
+    }
+
+    function UpdateInsemination(ID) {
+        Swal.fire({
+            title: 'Tohumlama Tarihini Düzenle',
+            input: 'text',
+            inputAttributes: {
+                id: 'abc'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Tarihi Güncelle',
+            showLoaderOnConfirm: true,
+            preConfirm: (login) => {
+                return $('#abc').val();
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+            if (result.value) {
+                var date = result.value;
+                var id = ID;
+                $.ajax({
+                    url: '/Insemination/UpdateInsemination',
+                    type: 'POST',
+                    data: { id, date },
+                    success: function myfunction() { 
+                        location.reload();
+                    },
+                    error: function myfunction() {
+                  
+                    }
+                });
+
+            }
+
+
+        })
+
+        jQuery('#abc').datepicker({
+            autoclose: true,
+            todayHighlight: true 
+        });
+
+
+
+    }
+</script>

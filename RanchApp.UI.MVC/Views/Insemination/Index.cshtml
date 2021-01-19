@@ -1,0 +1,136 @@
+﻿@model IEnumerable<RanchApp.DAL.App_Classes.Insemination>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<div class="container-fluid mt-2">
+    <table id="example" class="table table-striped table-bordered" style="width:100%; font-size:14px;">
+        <thead>
+            <tr>
+                <th>Adı ve Küpe Numarası</th>
+                <th>Tohumlanma Tarihi ve Geçen Süre</th>
+                <th>Kontrol Sonucu</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Where(x => x.Result == true))
+            {
+                <tr>
+                    <td>@item.Cattle.Name | @item.CattleID</td>
+                    <td>@item.Date.ToString("dd.MM.yyyy") | @DateTime.Now.Subtract(item.Date).Days Gün</td>
+                    <td>
+                        @if (DateTime.Now.Subtract(item.Date).Days > 50 && DateTime.Now.Subtract(item.Date).Days < 210)
+                        {
+                            <label class="btn btn-warning text-white">Hayvan Gebe</label>
+                        }
+                        else if (DateTime.Now.Subtract(item.Date).Days >= 210)
+                        {
+                            <a onclick="DeleteAllInsemination('@item.CattleID')" class="btn btn-danger">Hayvan Kuruda <span class="font-10">(Doğduğunda Tohumlanmayı Sil)</span></a>
+                        }
+                        else
+                        {
+                            <a onclick="CancelInsemination(@item.ID,'@item.CattleID')" class="btn btn-dark text-white">Tohumlanma Başarısız</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div> 
+<script>
+    function CancelInsemination(ID, EarringNumber) {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            text: EarringNumber + ' küpeli hayvandan tohumlandırmayı kaldırmak istediğinize emin misiniz ?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: ' Evet ',
+            cancelButtonText: ' Hayır ',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+
+                $.ajax({
+                    url: '/Insemination/CancelInsemination',
+                    type: 'POST',
+                    data: { ID },
+                    success: function myfunction() {
+                        swalWithBootstrapButtons.fire(
+                            'Başarılı!',
+                            'Tohumlanma Kaldırıldı',
+                            'success'
+                        ).then((result) => {
+                            location.reload();
+                        });
+                    },
+                    error: function myfunction() {
+                        swalWithBootstrapButtons.fire(
+                            'Başarısız',
+                            'Tohumlanma Kaldırılamadı',
+                            'error'
+                        )
+                    }
+                });
+            }
+        })
+    }
+
+
+    function DeleteAllInsemination(EarringNumber) {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            text: EarringNumber + ' küpeli hayvan doğum yaptı mı? Tohumlanmayı Silmek istiyor musunuz?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: ' Evet ',
+            cancelButtonText: ' Hayır ',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+
+                $.ajax({
+                    url: '/Insemination/DeleteAllInsemination',
+                    type: 'POST',
+                    data: { EarringNumber },
+                    success: function myfunction() {
+                        swalWithBootstrapButtons.fire(
+                            'Başarılı!',
+                            'Tohumlanma Kaldırıldı',
+                            'success'
+                        ).then((result) => {
+                            location.reload();
+                        });
+                    },
+                    error: function myfunction() {
+                        swalWithBootstrapButtons.fire(
+                            'Başarısız',
+                            'Tohumlanma Kaldırılamadı',
+                            'error'
+                        )
+                    }
+                });
+            }
+        })
+    }
+
+</script>
+
+
+
+
+

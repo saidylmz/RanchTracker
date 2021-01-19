@@ -1,0 +1,72 @@
+﻿@model IEnumerable<RanchApp.DAL.App_Classes.CattleType>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<div class="container mt-3">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-6">
+                <div class="card card-hover">
+                    <a href="@Url.Action("Index","Cattle",new {CattleTypeID = item.ID })" class="box bg-danger text-center">
+                        <h1 class="font-light text-white"><i class="mdi mdi-cow"></i></h1>
+                        <h6 class="text-white">@item.Name</h6>
+                    </a>
+
+                    <button type="submit" class="btn btn-block btn-dark mb-2 mt-2 pb-3 pt-3 delete" style="font-size:10px; " onclick="typeDelete('@item.Name',@item.ID)">Tür Sil</button>
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    function typeDelete(CattleTypeName, CattleTypeID) {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+
+            text: CattleTypeName + ' türünü silmek istediğinize emin misiniz ?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: ' Evet ',
+            cancelButtonText: ' Hayır ',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+
+                $.ajax({
+                    url: '/CattleType/DeleteCattleType',
+                    type: 'POST',
+                    data: { CattleTypeID },
+                    success: function myfunction() {
+                        swalWithBootstrapButtons.fire(
+                            'Silindi!',
+                            'Tür Silindi',
+                            'success'
+                        ).then((result) => {
+                            location.reload();
+                        });
+                    },
+                    error: function myfunction() {
+                        swalWithBootstrapButtons.fire(
+                            'Başarısız',
+                            'Tür Silinemedi',
+                            'error'
+                        )
+                    }
+                });
+            }
+        })
+    }
+</script>

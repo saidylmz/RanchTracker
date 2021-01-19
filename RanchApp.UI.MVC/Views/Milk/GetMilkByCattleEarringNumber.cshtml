@@ -1,0 +1,95 @@
+﻿@model  RanchApp.DAL.App_Classes.Cattle
+@{
+    ViewBag.Title = "GetMilkByCattleEarringNumber";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<div class="container-fluid mt-2">
+    <div class="float-left font-10">
+        <label>
+            Haftalık Süt Miktarı => @Model.Milks.Where(x => (DateTime.Now - x.Date).Days < 8).Sum(x => x.Liter) Litre<br />
+            Aylık Süt Miktarı => @Model.Milks.Where(x => (DateTime.Now - x.Date).Days < 30).Sum(x => x.Liter) Litre<br />
+            Toplam Süt Miktarı => @Model.Milks.Sum(x => x.Liter) Litre
+        </label>
+
+    </div>
+    <div class="float-right">
+        <a href="@Url.Action("AddMilk","Milk",new { EarringNumber = Model.EarringNumber })" class="btn btn-success">
+            Süt Ekle
+        </a>
+    </div>
+    <table id="example" class="table table-striped table-bordered" style="width:100%; font-size:14px;">
+        <thead>
+            <tr>
+                <th>
+                    (@Model.EarringNumber ) -> Tarihi
+                </th>
+                <th>Litresi</th>
+                <th>İşlem</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Milks)
+            {
+                <tr>
+                    <td>@item.Date.ToString("dd.MM.yyyy")</td>
+                    <td>@item.Liter</td>
+                    <td>
+                        <a onclick="DeleteMilk(@item.ID,'@item.Date.ToString("dd.MM.yyyy")','@item.CattleID')" class="btn btn-danger text-white">Sil</a>
+                        <a href="@Url.Action("UpdateMilk","Milk", new { id = item.ID })" class="btn btn-warning" style="margin-left:2px;">Düzenle</a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function DeleteMilk(ID, date, EarringNumber) {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            text: date + ' tarihli sütü silmek istediğinize emin misiniz ?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: ' Evet ',
+            cancelButtonText: ' Hayır ',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+
+                $.ajax({
+                    url: '/Milk/DeleteMilk',
+                    type: 'POST',
+                    data: { ID, EarringNumber },
+                    success: function myfunction() {
+                        swalWithBootstrapButtons.fire(
+                            'Silindi!',
+                            'Süt Silindi',
+                            'success'
+                        ).then((result) => {
+                            location.reload();
+                        });
+                    },
+                    error: function myfunction() {
+                        swalWithBootstrapButtons.fire(
+                            'Başarısız',
+                            'Süt Silinemedi',
+                            'error'
+                        )
+                    }
+                });
+            }
+        })
+
+    }
+</script>
+
+
+

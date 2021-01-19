@@ -1,0 +1,83 @@
+﻿@model RanchApp.DAL.App_Classes.Cattle
+@{
+    ViewBag.Title = "UpdateCattle";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+@using (Html.BeginForm("UpdateCattle", "Cattle", FormMethod.Post ))
+{
+     @Html.AntiForgeryToken()
+    <div class="container-fluid mt-2">
+        <div class="col-12 mb-2">
+            <label for="EarringNumberq">Küpe Numarası</label>
+            <input type="text" class="form-control" id="EarringNumber" name="EarringNumber" value="@Model.EarringNumber" placeholder="Küpe No" readonly />
+        </div>
+        <div class="col-12 mb-2">
+
+            <label for="MomEarringNumber">Anne Küpe Numarası</label>
+            <select name="MomEarringNumber" class="form-control">
+                @foreach (var item in Model.Ranch.Cattles)
+                {
+                    if (Model.MomEarringNumber == item.EarringNumber)
+                    {
+                        <option selected>@item.EarringNumber</option>
+                    }
+                    else
+                    {
+                        <option>@item.EarringNumber</option>
+                    }
+
+                }
+            </select>
+        </div>
+        <div class="col-12 mb-2">
+            <label for="Name">İsmi</label>
+            <input type="text" class="form-control" id="Name" name="Name" value="@Model.Name" placeholder="İsmi" required />
+        </div>
+        <div class="col-12 mb-2">
+            <label for="Type">Cinsi</label>
+            <input type="text" class="form-control" id="Type" name="Type" value="@Model.Type" placeholder="Cinsi" required />
+        </div>
+        <div class="col-12 mb-2">
+            <label for="BirthDate">Doğum Tarihi</label>
+            <div class="input-group">
+                <input type="text" class="form-control" name="BirthDate" id="BirthDate" value="@Model.BirthDate.ToShortDateString() " placeholder="mm/dd/yyyy" required>
+                <div class="input-group-append">
+                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 mb-2">
+            <label for="CattleTypeID">Türü</label>
+            <select name="CattleTypeID" class="form-control" required>
+                @foreach (var item in Model.Ranch.CattleTypes)
+                {
+                    if (Model.CattleTypeID == item.ID)
+                    {
+                        <option value="@item.ID" selected>@item.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@item.ID">@item.Name</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-12 mb-3">
+            <label for="Description">Açıklama</label>
+            <textarea class="form-control" id="Description" name="Description"  placeholder="Açıklama" required>@Model.Description</textarea>
+        </div>
+        @if (Session["Id"] == null)
+        {
+            <script type="text/javascript">
+                    window.location.href = "@Url.Action("Index","Login")";
+            </script>
+        }
+        else
+        {
+            @Html.Hidden("RanchID", (int)Session["Id"])
+        }
+
+        <button type="submit" class="btn btn-info btn-lg col-12 mb-3 ">Hayvan Düzenle</button>
+    </div>
+} 

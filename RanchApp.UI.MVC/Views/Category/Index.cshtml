@@ -1,0 +1,19 @@
+﻿@model IEnumerable<RanchApp.DAL.App_Classes.Category>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<div class="container-fluid mt-3">
+    <div class="row"> 
+        @foreach (var item in Model)
+        {
+        <div class="card col-6 text-center"> 
+                <a href="@Url.Action("Index","CattleType",new {CategoryID = item.ID })"><img src="@String.Format("data:image/gif;base64,{0}", Convert.ToBase64String(item.Image))" width="140" height="140" fill="#777" /></a>
+                <h6 style="text-align:center">@item.Name</h6>
+            
+        </div>
+        }
+    </div>
+</div> 
+

@@ -1,0 +1,99 @@
+﻿@model IEnumerable<RanchApp.DAL.App_Classes.CattleType>
+@{
+    ViewBag.Title = "AddCattle";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+
+@using (Html.BeginForm("AddCattle", "Cattle", FormMethod.Post, new { onSubmit = "return validateForm(this);" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="container-fluid mt-2">
+    <div class="col-12 mb-2">
+        <label for="EarringNumberq">Küpe Numarası</label>
+        <input type="text" class="form-control" id="EarringNumber" name="EarringNumber" value="" placeholder="Küpe No (Örn: TR060001234567)" required maxlength="14"/>
+    </div>
+    <div class="col-12 mb-2">
+
+        <label for="MomEarringNumber">Anne Küpe Numarası</label>
+        <select name="MomEarringNumber" class="form-control">
+            <option value="">Annesi Bilinmiyor</option>
+            @if (Model.Count() > 0)
+            {
+                foreach (var item in Model.First().Ranch.Cattles)
+                {
+                    <option value="@item.EarringNumber">@item.EarringNumber</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="col-12 mb-2">
+        <label for="Name">İsmi</label>
+        <input type="text" class="form-control" id="Name" name="Name" value="" placeholder="İsmi" required />
+    </div>
+    <div class="col-12 mb-2">
+        <label for="Type">Cinsi</label>
+        <input type="text" class="form-control" id="Type" name="Type" placeholder="Cinsi" required />
+    </div>
+    <div class="col-12 mb-2">
+        <label for="BirthDate">Doğum Tarihi</label>
+        <div class="input-group">
+            <input type="text" class="form-control" name="BirthDate" id="BirthDate" placeholder="mm/dd/yyyy" required>
+            <div class="input-group-append">
+                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 mb-2">
+        <label for="CattleTypeID">Türü</label>
+        <select name="CattleTypeID" class="form-control" required>
+            @foreach (var item in Model)
+            {
+                <option value="@item.ID">@item.Name</option>
+            }
+        </select>
+    </div>
+    <div class="col-12 mb-3">
+        <label for="Description">Açıklama</label>
+        <textarea class="form-control" id="Description" name="Description" placeholder="Açıklama"></textarea>
+    </div>
+    @if (Session["Id"] == null)
+    {
+        <script type="text/javascript">
+                    window.location.href = "@Url.Action("Index","Login")";
+        </script>
+    }
+    else
+    {
+        @Html.Hidden("RanchID", (int)Session["Id"])
+    }
+
+    <button type="submit" class="btn btn-info btn-lg col-12 mb-3    ">Hayvan Ekle</button>
+</div>
+}
+<script>
+    function validateForm(e) {
+        var eno = EarringNumber.value;
+        var result = true;
+        $.ajax({
+            url: "/Cattle/AddControl",
+            type: "POST",
+            async: false,
+            data: { EarringNumber: eno },
+            success: function (data) {
+                if (data != 'True') {
+                    Swal.fire(
+                        'Başarısız',
+                        'Aynı küpe numarası daha önce eklenmiş',
+                        'warning'
+                    )
+                    result = false;
+                }
+            },
+            error: function () {
+            }
+        })
+        return result;
+    }
+</script>
+
