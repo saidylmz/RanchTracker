@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace RanchApp.UI.MVC.Controllers
+namespace RanchTracker.UI.MVC.Controllers
 {
     public class DemoController : Controller
     {

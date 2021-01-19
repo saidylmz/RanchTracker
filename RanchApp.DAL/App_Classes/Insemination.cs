@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RanchApp.DAL.App_Classes
+namespace RanchTracker.DAL.App_Classes
 {
     public class Insemination
     {

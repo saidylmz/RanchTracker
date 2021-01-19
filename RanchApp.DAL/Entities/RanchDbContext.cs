@@ -1,4 +1,4 @@
-﻿using RanchApp.DAL.App_Classes;
+﻿using RanchTracker.DAL.App_Classes;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RanchApp.DAL.Entities
+namespace RanchTracker.DAL.Entities
 {
     public class RanchDbContext:DbContext
     {

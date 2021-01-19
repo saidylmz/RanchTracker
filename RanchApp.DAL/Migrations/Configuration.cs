@@ -1,11 +1,11 @@
-namespace RanchApp.DAL.Migrations
+namespace RanchTracker.DAL.Migrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<RanchApp.DAL.Entities.RanchDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<RanchTracker.DAL.Entities.RanchDbContext>
     {
         public Configuration()
         {
@@ -13,7 +13,7 @@ namespace RanchApp.DAL.Migrations
             AutomaticMigrationDataLossAllowed = true;
         }
 
-        protected override void Seed(RanchApp.DAL.Entities.RanchDbContext context)
+        protected override void Seed(RanchTracker.DAL.Entities.RanchDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

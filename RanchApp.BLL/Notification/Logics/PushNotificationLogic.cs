@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RanchApp.BLL
+namespace RanchTracker.BLL
 {
     public static class PushNotificationLogic
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace RanchApp.UI.MVC.App_Classes
+namespace RanchTracker.UI.MVC.App_Classes
 {
     public class SessionController:ActionFilterAttribute
     {

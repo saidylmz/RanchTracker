@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace RanchApp.UI.MVC
+namespace RanchTracker.UI.MVC
 {
     public class RouteConfig
     {

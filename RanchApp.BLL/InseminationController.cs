@@ -1,5 +1,5 @@
-﻿using RanchApp.DAL.App_Classes;
-using RanchApp.DAL.Repositories;
+﻿using RanchTracker.DAL.App_Classes;
+using RanchTracker.DAL.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RanchApp.BLL
+namespace RanchTracker.BLL
 {
     public class InseminationController
     {

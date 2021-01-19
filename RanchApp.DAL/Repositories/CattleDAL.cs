@@ -1,5 +1,5 @@
-﻿using RanchApp.DAL.App_Classes;
-using RanchApp.DAL.Entities;
+﻿using RanchTracker.DAL.App_Classes;
+using RanchTracker.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RanchApp.DAL.Repositories
+namespace RanchTracker.DAL.Repositories
 {
     public class CattleDAL
     {

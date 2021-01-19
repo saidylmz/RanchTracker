@@ -1,12 +1,12 @@
-﻿using RanchApp.DAL.App_Classes;
-using RanchApp.UI.MVC.App_Classes;
+﻿using RanchTracker.DAL.App_Classes;
+using RanchTracker.UI.MVC.App_Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace RanchApp.UI.MVC.Controllers
+namespace RanchTracker.UI.MVC.Controllers
 {
     [SessionController]
     public class MilkController : Controller

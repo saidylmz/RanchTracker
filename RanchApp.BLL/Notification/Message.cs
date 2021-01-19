@@ -1,5 +1,5 @@
 
-namespace RanchApp.BLL
+namespace RanchTracker.BLL
 {
     public class Message
     {

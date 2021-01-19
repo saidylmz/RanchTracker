@@ -1,4 +1,4 @@
-﻿using RanchApp.DAL.App_Classes;
+﻿using RanchTracker.DAL.App_Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
-namespace RanchApp.UI.MVC.Controllers
+namespace RanchTracker.UI.MVC.Controllers
 {
     [AllowAnonymous]
     public class LoginController : Controller

@@ -84,9 +84,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RanchApp.DAL\RanchApp.DAL.csproj">
+    <ProjectReference Include="..\RanchApp.DAL\RanchTracker.DAL.csproj">
       <Project>{09defa49-e424-49fa-b7d4-6bd239c9bbf8}</Project>
-      <Name>RanchApp.DAL</Name>
+      <Name>RanchTracker.DAL</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

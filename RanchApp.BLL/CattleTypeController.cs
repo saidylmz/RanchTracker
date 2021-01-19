@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RanchApp.DAL.App_Classes;
-using RanchApp.DAL.Repositories;
-namespace RanchApp.BLL
+using RanchTracker.DAL.App_Classes;
+using RanchTracker.DAL.Repositories;
+namespace RanchTracker.BLL
 {
      
     public class CattleTypeController

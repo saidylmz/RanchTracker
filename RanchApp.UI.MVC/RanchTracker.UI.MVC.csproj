@@ -518,13 +518,13 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RanchApp.BLL\RanchApp.BLL.csproj">
+    <ProjectReference Include="..\RanchApp.BLL\RanchTracker.BLL.csproj">
       <Project>{93cc64b6-4168-4065-863d-255706427f73}</Project>
-      <Name>RanchApp.BLL</Name>
+      <Name>RanchTracker.BLL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RanchApp.DAL\RanchApp.DAL.csproj">
-      <Project>{09DEFA49-E424-49FA-B7D4-6BD239C9BBF8}</Project>
-      <Name>RanchApp.DAL</Name>
+    <ProjectReference Include="..\RanchApp.DAL\RanchTracker.DAL.csproj">
+      <Project>{09defa49-e424-49fa-b7d4-6bd239c9bbf8}</Project>
+      <Name>RanchTracker.DAL</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
