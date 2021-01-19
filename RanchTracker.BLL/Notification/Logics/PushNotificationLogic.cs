@@ -10,7 +10,7 @@ namespace RanchTracker.BLL
     public static class PushNotificationLogic
     {
         private static Uri FireBasePushNotificationsURL = new Uri("https://fcm.googleapis.com/fcm/send");
-        private static string ServerKey = "AAAAGCq3UPE:APA91bFIbyYFlOI9FKuzdu7K-9V6XCeccy6LHYPXE_A-OcjeoY83LURbtZ6icwG3OZfLEdChTtuQa0cZNPYrrIGUqfBC8TK5_q4wGBhq0wzJiHrUx3OOIcRW-Q6I24a8IvkmVXCoxaX9";
+        private static string ServerKey = "";
 
         /// <summary>
         /// 
